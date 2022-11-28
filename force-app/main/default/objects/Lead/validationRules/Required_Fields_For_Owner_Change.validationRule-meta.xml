@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Fields_For_Owner_Change</fullName>
+    <active>true</active>
+    <description>Country, Lead Source and No. of Employees</description>
+    <errorConditionFormula>AND(
+ ISCHANGED(OwnerId),
+ OR(
+  AND(
+   ISBLANK(Country),
+   $User.ProfileId != $CustomMetadata.Constant__mdt.SYSADMIN_PROFILE_ID.Value__c
+  ),
+  ISBLANK(TEXT(LeadSource)),
+  AND(
+   ISBLANK(NumberOfEmployees),
+   $User.ProfileId != $CustomMetadata.Constant__mdt.SYSADMIN_PROFILE_ID.Value__c,
+   $User.ProfileId != $CustomMetadata.Constant__mdt.CONTRACT_MANAGER_PROFILE_ID.Value__c   
+  )
+ ) 
+)</errorConditionFormula>
+    <errorMessage>Make sure to fill in Country, Lead Source and No. of Employees.</errorMessage>
+</ValidationRule>
